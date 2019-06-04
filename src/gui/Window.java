@@ -2,24 +2,27 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Window extends JFrame {
-    public Window() {
+    public Window() throws HeadlessException{
         setTitle("Chat");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(getStandardLayout());
-        setBounds(400, 400, 400, 300);
+        setBounds(100, 100, 600, 500);
 
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setFont(new Font("Courier", Font.BOLD, 10));
-        textArea.setBackground(new Color(45, 55, 70, 45));
+//        textArea.setBackground(new Color(45, 55, 70, 45));
 
         JPanel panel = new JPanel(getStandardLayout());
 
         JTextField textField = new JTextField();
         textField.setFont(new Font("Courier", Font.BOLD, 10));
+        textField.addActionListener(getActionListener(textField, textArea));
         panel.add(textField, BorderLayout.CENTER);
 
         panel.add(getPanel(), BorderLayout.WEST);
@@ -27,6 +30,7 @@ public class Window extends JFrame {
 
         JButton pushButton = new JButton("Отправить");
         pushButton.setFont(new Font("Courier", Font.BOLD, 12));
+        pushButton.addActionListener(getActionListener(textField, textArea));
 
         JPanel gapPanel = new JPanel(getStandardLayout());
         panel.add(gapPanel, BorderLayout.EAST);
@@ -47,8 +51,9 @@ public class Window extends JFrame {
         add(getPanel(), BorderLayout.WEST);
         add(textArea, BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
-        
+
         setVisible(true);
+        textField.grabFocus();
     }
 
     private BorderLayout getStandardLayout() {
@@ -60,5 +65,17 @@ public class Window extends JFrame {
 
     private JPanel getPanel() {
         return new JPanel(getStandardLayout());
+    }
+
+    private ActionListener getActionListener(JTextField textField, JTextArea textArea) {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = textField.getText();
+                textField.setText("");
+                textArea.append("Вы: " + text + '\n');
+                textField.grabFocus();
+            }
+        };
     }
 }
