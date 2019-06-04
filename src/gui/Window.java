@@ -38,10 +38,16 @@ public class Window extends JFrame {
         gapPanel.add(getPanel(), BorderLayout.EAST);
 
         JMenuBar mainMenu = new JMenuBar();
-        JMenu options = new JMenu("Опции");
+        JMenu options = new JMenu("Меню");
         options.setFont(new Font("Courier", Font.BOLD, 12));
         JMenuItem itemExit = new JMenuItem("Выход");
         itemExit.setFont(new Font("Courier", Font.BOLD, 10));
+        itemExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         options.add(itemExit);
         mainMenu.add(options);
 
