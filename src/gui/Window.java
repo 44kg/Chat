@@ -8,46 +8,57 @@ public class Window extends JFrame {
         setTitle("Chat");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        BorderLayout layout0 = new BorderLayout();
-        layout0.setHgap(5);
-        layout0.setVgap(5);
-        setLayout(layout0);
+        setLayout(getStandardLayout());
         setBounds(400, 400, 400, 300);
 
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
-        Font font0 = new Font("Courier", Font.BOLD, 12);
-        textArea.setFont(font0);
+        textArea.setFont(new Font("Courier", Font.BOLD, 10));
+        textArea.setBackground(new Color(45, 55, 70, 45));
 
-        JPanel panel = new JPanel();
-
-        BorderLayout layout1 = new BorderLayout();
-        layout1.setHgap(5);
-        layout1.setVgap(5);
-        panel.setLayout(layout1);
+        JPanel panel = new JPanel(getStandardLayout());
 
         JTextField textField = new JTextField();
-        Font font1 = new Font("Courier", Font.BOLD, 12);
-        textField.setFont(font1);
+        textField.setFont(new Font("Courier", Font.BOLD, 10));
+        panel.add(textField, BorderLayout.CENTER);
+
+        panel.add(getPanel(), BorderLayout.WEST);
+        panel.add(getPanel(), BorderLayout.SOUTH);
 
         JButton pushButton = new JButton("Отправить");
-        Font font2 = new Font("Courier", Font.BOLD, 12);
-        pushButton.setFont(font2);
+        pushButton.setFont(new Font("Courier", Font.BOLD, 12));
 
-        panel.add(textField, BorderLayout.CENTER);
-        panel.add(pushButton, BorderLayout.EAST);
+        JPanel gapPanel = new JPanel(getStandardLayout());
+        panel.add(gapPanel, BorderLayout.EAST);
+        gapPanel.add(pushButton, BorderLayout.CENTER);
+        gapPanel.add(getPanel(), BorderLayout.EAST);
 
         JMenuBar mainMenu = new JMenuBar();
         JMenu options = new JMenu("Опции");
+        options.setFont(new Font("Courier", Font.BOLD, 12));
         JMenuItem itemExit = new JMenuItem("Выход");
+        itemExit.setFont(new Font("Courier", Font.BOLD, 10));
         options.add(itemExit);
         mainMenu.add(options);
 
         setJMenuBar(mainMenu);
+        add(getPanel(), BorderLayout.NORTH);
+        add(getPanel(), BorderLayout.EAST);
+        add(getPanel(), BorderLayout.WEST);
         add(textArea, BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
-
-        setResizable(false);
+        
         setVisible(true);
+    }
+
+    private BorderLayout getStandardLayout() {
+        BorderLayout layout = new BorderLayout();
+        layout.setHgap(5);
+        layout.setVgap(5);
+        return layout;
+    }
+
+    private JPanel getPanel() {
+        return new JPanel(getStandardLayout());
     }
 }
